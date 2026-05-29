@@ -1,4 +1,4 @@
-# Copyright 2025 Arm Limited and/or its affiliates.
+# Copyright 2025-2026 Arm Limited and/or its affiliates.
 #
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
@@ -43,7 +43,6 @@ def model_converter_env() -> dict[str, str]:
 
 def require_model_converter_binary() -> str:
     """Return a usable model converter executable or raise a helpful error."""
-
     binary = find_model_converter_binary()
     if binary is None:
         tried = ", ".join((MODEL_CONVERTER_BINARY, _MODEL_CONVERTER_FALLBACK_BINARY))

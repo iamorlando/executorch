@@ -45,6 +45,17 @@ def grid_sampler_2d_operator_name(
     padding_mode: int,
     align_corners: bool,
 ) -> str:
+    """Build the custom operator name for a 2D grid sampler variant.
+
+    Args:
+        interpolation_mode (int): PyTorch grid_sample interpolation mode.
+        padding_mode (int): PyTorch grid_sample padding mode.
+        align_corners (bool): Whether grid_sample aligns tensor corners.
+
+    Returns:
+        str: Fully qualified custom operator name.
+
+    """
     interpolation = _mode_name(
         int(interpolation_mode),
         _INTERPOLATION_MODE_NAMES,
@@ -68,6 +79,17 @@ def build_grid_sampler_2d_payload(
     padding_mode: int,
     align_corners: bool,
 ) -> dict[str, Any]:
+    """Build Vulkan custom shader metadata for a 2D grid sampler variant.
+
+    Args:
+        interpolation_mode (int): PyTorch grid_sample interpolation mode.
+        padding_mode (int): PyTorch grid_sample padding mode.
+        align_corners (bool): Whether grid_sample aligns tensor corners.
+
+    Returns:
+        dict[str, Any]: Custom shader metadata payload.
+
+    """
     _mode_name(
         int(interpolation_mode),
         _INTERPOLATION_MODE_NAMES,
@@ -109,8 +131,27 @@ def build_grid_sampler_2d_payload(
 
 
 def encode_payload(payload: dict[str, Any]) -> list[int]:
+    """Encode a custom shader payload as implementation attributes.
+
+    Args:
+        payload (dict[str, Any]): Custom shader metadata payload.
+
+    Returns:
+        list[int]: UTF-8 JSON bytes represented as integer attributes.
+
+    """
     return list(json.dumps(payload, sort_keys=True).encode("utf-8"))
 
 
 def decode_payload(implementation_attrs: list[int]) -> dict[str, Any]:
+    """Decode implementation attributes into a custom shader payload.
+
+    Args:
+        implementation_attrs (list[int]): UTF-8 JSON bytes represented as
+            integer attributes.
+
+    Returns:
+        dict[str, Any]: Custom shader metadata payload.
+
+    """
     return json.loads(bytes(implementation_attrs).decode("utf-8"))
